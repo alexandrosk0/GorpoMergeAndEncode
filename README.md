@@ -33,3 +33,6 @@ Note that the stucture works for single videos for the camera models: HD HERO2, 
 
 For HERO6 Black, & HERO7 (White, Silver, Black) or other formats use -mergeAll parameter
 See [GoPro Camera File Naming Convention](https://gopro.com/help/articles/question_answer/GoPro-Camera-File-Naming-Convention)
+
+This was made quick and dirty as way for me to learn more about powershell, it can be improved/simplified massively.
+Decided to make it open source, since others might find usage.
