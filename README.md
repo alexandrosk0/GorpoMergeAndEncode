@@ -1,5 +1,5 @@
 # GorpoMergeAndEncode
-Gorpo file merger and encoding in Powershell using **MKVToolNix and Handbrake**
+Merge and encode single videos split in multiple mp4 files with Powershell using **MKVToolNix and Handbrake**
 
 ## Description
 Merge and encode single videos split in multiple mp4 files in the given gopro export folder and removes original files if succesfull.
