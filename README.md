@@ -7,14 +7,14 @@ Needs [MKVmerge](https://mkvtoolnix.download/) and [HandBrakeCLI](https://handbr
 
 See [official Handbrake presets](https://handbrake.fr/docs/en/latest/technical/official-presets.html)
 
-######Parameters
+Parameters
 **-dir** Defaults to current directory
 **-preset** Default preset "Vimeo YouTube HQ 1440p60 2.5K"
 **-MKVMergeExtraParam** and **-HandbrakeExtraParam** Extra parameters for each program 
 **-test** Test merge and encode three seconds of each video, without deleting the original files
 **-delete** Delete original files if not error is returned. Defaults to true
 
-######Example
+Example
 **.\goproMergeEncode1440p60.ps1 -dir "d:\Video\GoPro\2019-04-21\HERO5 Black 1\" -preset "Vimeo YouTube HQ 1440p60 2.5K"**
 
 
