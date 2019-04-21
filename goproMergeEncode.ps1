@@ -1,17 +1,28 @@
-#Gopro Hero 5 file merge and Encode helper
-#Merge and encode multiple mp4 files in the given gopro export folder
+#Gorpo file merger and encoding in Powershell using MKVToolNix and Handbrake
+#Merge and encode multiple mp4 files in the given gopro export folder and deletes original files.
 #Needs MKVmerge https://mkvtoolnix.download/ and HandBrakeCLI https://handbrake.fr/downloads2.php
-#Example usage .\goproMergeEncode1440p60.ps1 -dir "d:\Video\GoPro\2019-04-21\HERO5 Black 1\" -preset "Vimeo YouTube HQ 1440p60 2.5K"
-#More official Handbrake presets here: https://handbrake.fr/docs/en/latest/technical/official-presets.html
-#Add extra parameters to using MKVMergeExtraParam and HandbrakeExtraParam
-#Use -test to encode three seconds of each video
-#Based on the file name format GOPR2548.MP4, GP012548.MP4 and folder format ..\GoPro\2019-04-21\HERO5 Black 1\
+#See official Handbrake presets https://handbrake.fr/docs/en/latest/technical/official-presets.html
+
+#Parameters
+#-dir Defaults to current directory
+#-preset Default preset "Vimeo YouTube HQ 1440p60 2.5K"
+#-MKVMergeExtraParam and -HandbrakeExtraParam Extra parameters for each program 
+#-test Test merge and encode three seconds of each video, without deleting the original files
+#-delete Delete original files if not error is returned. Defaults to true
+
+#Based on the file name format GOPR2548.MP4 and multiple files GP012548.MP4, GP022548.MP4,... and folder structure ..\GoPro\2019-04-21\HERO5 Black 1\
+#Note that the stucture works for single videos for the camera models: HD HERO2, HERO3, HERO3+, HERO (2014), HERO Session, HERO4, HERO5 Black, HERO5 Session, HERO (2018)
+#See GoPro Camera File Naming Convention https://gopro.com/help/articles/question_answer/GoPro-Camera-File-Naming-Convention
+
+#Example .\goproMergeEncode1440p60.ps1 -dir "D:\Video\GoPro\2019-04-21\HERO5 Black 1\" -preset "Vimeo YouTube HQ 1440p60 2.5K"
+#Output file for D:\Video\GoPro\2019-04-21\HERO5 Black 1\GOPR2548.MP4 is Encoded-GOPR2548-20190421.mp4
 
 param (
     [string]$dir = $(Get-Location),
 	[string]$preset = 'Vimeo YouTube HQ 1440p60 2.5K',
 	[string]$MKVMergeExtraParam = '',
 	[string]$HandbrakeExtraParam = '',
+	[switch]$delete = $true,
 	[switch]$test = $false
 )
 
@@ -30,7 +41,6 @@ if ($rootFiles.length -gt 0)
 {
 	ForEach ($initFile In $rootFiles)
 	{
-		"`n`n`n`n`n`n`n`n`n`n`n`n"
 		$root = $initFile.name.Substring(4).Split(".")[0]
 		$filesCount = (Get-ChildItem -Filter G*$root*.mp4 -Path $dir).Count
 		$filesFullname = (Get-ChildItem -Filter G*$root*.mp4 -Path $dir).fullname
@@ -38,7 +48,7 @@ if ($rootFiles.length -gt 0)
 
 		'Processing ' + $filesCount + " files:`n" + $filesFullname + "`n`n"		
 
-		$outputMerged = $dir.ToString() + 'Temp'  + $initFile.BaseName + '-' + $date + '.mkv'
+		$outputMerged = $dir.ToString() + 'Temp-'  + $initFile.BaseName + '-' + $date + '.mkv'
 
 		$outputEncoded = $dir.ToString() + 'Encoded-'  + $initFile.BaseName + '-' + $date + '.mp4'
 
@@ -53,20 +63,20 @@ if ($rootFiles.length -gt 0)
 		if ($LASTEXITCODE -ne 0) 
 		{
 			$error.Clear()
-			"`nAn error occurred, aborting deletion of files:`n" + $filesFullname
+			"An error occurred, aborting deletion of files:`n" + $filesFullname
 		}
 		else
 		{
 			Remove-Item $outputMerged
-			if (-Not $test)
+			if (-Not $test -And $delete)
 			{
 				Remove-Item $filesFullname
 			}
-			"`n`nFinished successfully at " + $(get-date) + " processing files:`n " + $filesFullname
+			"Finished successfully at " + $(get-date) + " processing files:`n " + $filesFullname
 		}		
 	}	
 }
 else
 {
-	"`nNo mp4 files to process if folder " + $dir
+	"No mp4 files to process in folder " + $dir
 }
