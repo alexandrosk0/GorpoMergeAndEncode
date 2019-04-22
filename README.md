@@ -52,9 +52,7 @@ All scripts run during this session will bypass the restrictions.
 Based on the file name format GOPR2548.MP4 and multiple files GP012548.MP4, GP022548.MP4,... and folder structure ..\GoPro\2019-04-21\HERO5 Black 1\
 Note that the script expects a structure that works for single videos for the camera models: HD HERO2, HERO3, HERO3+, HERO (2014), HERO Session, HERO4, HERO5 Black, HERO5 Session, HERO (2018)
 
-For HERO6 Black, & HERO7 (White, Silver, Black) or other formats use -mergeAll parameter
-
-See [GoPro Camera File Naming Convention](https://gopro.com/help/articles/question_answer/GoPro-Camera-File-Naming-Convention)
+For HERO6 Black, & HERO7 (White, Silver, Black) or other formats use -mergeAll parameter. See [GoPro Camera File Naming Convention](https://gopro.com/help/articles/question_answer/GoPro-Camera-File-Naming-Convention)
 
 This was made quickly with the goal for me to learn more about PowerShell.
 Decided to make it open source, since others might find useful.
