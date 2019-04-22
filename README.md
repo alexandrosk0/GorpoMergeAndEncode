@@ -54,12 +54,19 @@ Note that the script expects a structure that works for single videos for the ca
 
 For HERO6 Black, & HERO7 (White, Silver, Black) or other formats use -mergeAll parameter. See [GoPro Camera File Naming Convention](https://gopro.com/help/articles/question_answer/GoPro-Camera-File-Naming-Convention)
 
+Note that HandBrake doesn't support merging.
+
+## Altenatives
+- If you don't like PowerShell, although it's OSS and available in all platforms now, for linux bash you can use https://github.com/KonradIT/gopro-linux which also have much more features.
+- For tools with a user interface use https://www.mp4joiner.org/en/ or other tools from https://www.fosshub.com/Video-Editors.html
+
+
+## About
 This was made quickly with the goal for me to learn more about PowerShell.
 Probably would be better to use ffmpeg, but I like the presets of HandBrake and my focus was mostly on learning to script something using PowerShell.
-Decided to make it open source, since others might find useful.
 
+Decided to make it open source, since others might find useful, but now I have spent more time on documentation than actual scripting :)
 
+## Contact
 All code reviews, suggestions, recommendations, pieces of advice, optimizations, insults are welcomed.
-alexkonstantonis(at)gmail.com
-
-Alternatively if you don't like PowerShell, although it's OSS and available in all platforms now, for linux bash you can use https://github.com/KonradIT/gopro-linux which also have much more features.
+alexkonstantonis@gmail.com
