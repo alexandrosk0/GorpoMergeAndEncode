@@ -31,8 +31,6 @@ param (
 	[switch]$noEncoding = $false,
 	[switch]$mergeAll = $false
 )
-"noEncoding $noEncoding"
-"mergeAll $mergeAll"
 
 if ($test)
 {
