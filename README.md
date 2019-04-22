@@ -26,7 +26,7 @@ Output file is Encoded-{original filename}-{date of subfolder}
 ## Example
 **.\goproMergeEncode1440p60.ps1 -dir "d:\Video\GoPro\2019-04-21\HERO5 Black 1\" -preset "Vimeo YouTube HQ 1440p60 2.5K"**
 
-To run from cmdline:
+To run from command line:
 **powershell.exe -noexit "& 'D:\goproMergeEncode.ps1' -dir 'D:\Video\GoPro\2019-04-19\HERO5 Black 1\' -test"**
 
 Output file for D:\Video\GoPro\2019-04-21\HERO5 Black 1\GOPR2548.MP4 is Encoded-GOPR2548-20190421.mp4
@@ -34,9 +34,19 @@ Output file for D:\Video\GoPro\2019-04-21\HERO5 Black 1\GOPR2548.MP4 is Encoded-
 ## Issues running powershell
 By default windows doesn't allow to run powershell scripts, see [execution policies](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_execution_policies?view=powershell-6#powershell-execution-policies)
 
-Check your execution policy by running the command `PS C:\> Get-ExecutionPolicy`
+### Permanent allow to run this script
+Open Start, search for PowerShell, right-click the top-result and click the Run as administrator option.
+
+Check your execution policy by running the command `Get-ExecutionPolicy`
 
 To change to a policy that allow you to run scripts, run powershell as administrator and run `Set-ExecutionPolicy RemoteSigned`
+
+To unblock this file only, go to the folder you downloaded the file and run `Unblock-File .\goproMergeEncode.ps1`
+
+### Temporary allow
+Run from command line `powershell –ExecutionPolicy Bypass`
+
+All scripts run during this session will bypass the restrictions.
 
 ## Notes
 Based on the file name format GOPR2548.MP4 and multiple files GP012548.MP4, GP022548.MP4,... and folder structure ..\GoPro\2019-04-21\HERO5 Black 1\
