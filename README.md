@@ -58,3 +58,4 @@ This was made quickly with the goal for me to learn more about PowerShell.
 Decided to make it open source, since others might find useful.
 
 All code reviews, suggestions, recommendations, pieces of advice, optimizations, insults are welcomed.
+alexkonstantonis(at)gmail.com
