@@ -31,6 +31,13 @@ To run from cmdline:
 
 Output file for D:\Video\GoPro\2019-04-21\HERO5 Black 1\GOPR2548.MP4 is Encoded-GOPR2548-20190421.mp4
 
+## Issues running powershell
+By default windows doesn't allow to run powershell scripts, see [execution policies](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_execution_policies?view=powershell-6#powershell-execution-policies)
+
+Check your execution policy by running the command `PS C:\> Get-ExecutionPolicy`
+
+To change to a policy that allow you to run scripts, run powershell as administrator and run `Set-ExecutionPolicy RemoteSigned`
+
 ## Notes
 Based on the file name format GOPR2548.MP4 and multiple files GP012548.MP4, GP022548.MP4,... and folder structure ..\GoPro\2019-04-21\HERO5 Black 1\
 Note that the stucture works for single videos for the camera models: HD HERO2, HERO3, HERO3+, HERO (2014), HERO Session, HERO4, HERO5 Black, HERO5 Session, HERO (2018)
