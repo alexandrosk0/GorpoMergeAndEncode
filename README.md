@@ -25,6 +25,10 @@ Output file is Encoded-{original filename}-{date of subfolder}
 
 ## Example
 **.\goproMergeEncode1440p60.ps1 -dir "d:\Video\GoPro\2019-04-21\HERO5 Black 1\" -preset "Vimeo YouTube HQ 1440p60 2.5K"**
+
+To run from cmdline:
+**powershell.exe -noexit "& 'D:\goproMergeEncode.ps1' -dir 'D:\Video\GoPro\2019-04-19\HERO5 Black 1\' -test"**
+
 Output file for D:\Video\GoPro\2019-04-21\HERO5 Black 1\GOPR2548.MP4 is Encoded-GOPR2548-20190421.mp4
 
 ## Notes
