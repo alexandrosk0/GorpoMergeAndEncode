@@ -55,5 +55,7 @@ Note that the script expects a structure that works for single videos for the ca
 For HERO6 Black, & HERO7 (White, Silver, Black) or other formats use -mergeAll parameter
 See [GoPro Camera File Naming Convention](https://gopro.com/help/articles/question_answer/GoPro-Camera-File-Naming-Convention)
 
-This was made quick and dirty as a way for me to learn more about PowerShell, it can be improved/simplified massively.
+This was made quickly with the goal for me to learn more about PowerShell.
 Decided to make it open source, since others might find useful.
+
+All code reviews, suggestions, recommendations, pieces of advice, optimizations, insults are welcomed.
