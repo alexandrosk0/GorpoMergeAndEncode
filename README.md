@@ -13,14 +13,14 @@ Output file is Encoded-{original filename}-{date of subfolder}
 
 ## Parameters
 
-* -dir Defaults to current directory
-* -preset Default preset "Vimeo YouTube HQ 1440p60 2.5K"
-* -MKVMergeExtraParam Extra parameters for MKVMerge
-* -HandbrakeExtraParam Extra parameters for Handbrake
-* -test Test merge and encode three seconds of each video, without deleting the original files
-* -delete Delete original files if not error is returned. Defaults to true
-* -mergeAll Ignore file naming and merge all files in the directory
-* -noEncoding Skip encoding step
+* `-dir` Defaults to current directory
+* `-preset` Default preset "Vimeo YouTube HQ 1440p60 2.5K"
+* `-MKVMergeExtraParam` Extra parameters for MKVMerge
+* `-HandbrakeExtraParam` Extra parameters for Handbrake
+* `-test` Test merge and encode three seconds of each video, without deleting the original files
+* `-delete` Delete original files if not error is returned. Defaults to true
+* `-mergeAll` Ignore file naming and merge all files in the directory
+* `-noEncoding` Skip encoding step
 
 
 ## Example
