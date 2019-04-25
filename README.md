@@ -20,7 +20,7 @@ Output file is Encoded-{original filename}-{date of subfolder}
 * `-test` Test merge and encode three seconds of each video, without deleting the original files
 * `-delete` Delete original files if no error is found. Defaults to true
 * `-mergeAll` Ignore file naming and merge all files in the directory
-* `-noEncoding` Skip encoding step
+* `-noEncoding` Skip encoding step, only merge
 
 
 ## Example
