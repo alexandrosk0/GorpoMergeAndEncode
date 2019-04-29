@@ -58,7 +58,7 @@ Note that HandBrake doesn't support merging.
 
 ## Alternatives
 - If you don't like PowerShell, although it's OSS and available in all platforms now, for linux bash you can use https://github.com/KonradIT/gopro-linux which also have much more features.
-- For tools with a user interface use https://www.mp4joiner.org/en/ or other tools from https://www.fosshub.com/Video-Editors.html
+- For tools with a user interface use https://www.mp4joiner.org/en/, http://www.dashware.net/ or other tools from https://www.fosshub.com/Video-Editors.html
 
 
 ## About
