@@ -86,12 +86,12 @@ if ($rootFiles.length -gt 0)
 		$cmdEncode = '"C:\Program Files\HandBrake\HandBrakeCLI.exe" --preset "' + $preset + '" -i"' + $outputMerged + '" -o "' + $outputEncoded + '" --turbo ' + $HandbrakeExtraParam
 		if (-Not $noEncoding)
 		{
-			cmd /c $cmdEncode 
-		}
+			cmd /c $cmdEncode
 
-		$encodedFile = (Get-ChildItem -Filter outputMerged -Path $dir)
-		$encodedFile.CreationTime = [datetime]::parseexact($date, 'yyyyMMdd', $null)
-		$encodedFile.LastWriteTime = $encodedFile.CreationTime
+			$encodedFile = (Get-ChildItem -Filter $outputMerged -Path $dir)
+			$encodedFile.CreationTime = [datetime]::parseexact($date, 'yyyyMMdd', $null)
+			$encodedFile.LastWriteTime = $encodedFile.CreationTime
+		}
 
 		if ($LASTEXITCODE -ne 0) 
 		{
