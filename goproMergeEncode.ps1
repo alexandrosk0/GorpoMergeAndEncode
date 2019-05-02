@@ -89,6 +89,10 @@ if ($rootFiles.length -gt 0)
 			cmd /c $cmdEncode 
 		}
 
+		$encodedFile = (Get-ChildItem -Filter outputMerged -Path $dir)
+		$encodedFile.CreationTime = [datetime]::parseexact($date, 'yyyyMMdd', $null)
+		$encodedFile.LastWriteTime = $encodedFile.CreationTime
+
 		if ($LASTEXITCODE -ne 0) 
 		{
 			$error.Clear()
