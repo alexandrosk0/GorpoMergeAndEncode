@@ -23,10 +23,15 @@ Output file is Encoded-{original filename}-{date of subfolder}
 * `-noEncoding` Skip encoding step, only merge
 
 
-## Example
+## Examples
+### PowerShell command line
 `.\goproMergeEncode.ps1 -dir "d:\Video\GoPro\2019-04-21\HERO5 Black 1\"`
 
-To run from command line:
+### Process backlog
+If you have a backlog of videos to split, you can create a chain of PowerShell commands
+`.\goproMergeEncode.ps1 -dir "D:\Video\GoPro\2018-10-19\HERO5 Black\"; .\goproMergeEncode.ps1 -dir "D:\Video\GoPro\2018-12-04\HERO5 Black 1\"; .\goproMergeEncode.ps1 -dir "D:\Video\GoPro\2018-12-11\HERO5 Black 1\";`
+
+### Windows command line
 `powershell.exe –ExecutionPolicy Bypass -noexit "& 'D:\goproMergeEncode.ps1' -dir 'D:\Video\GoPro\2019-04-19\HERO5 Black 1\' -test"`
 
 Output file for D:\Video\GoPro\2019-04-21\HERO5 Black 1\GOPR2548.MP4 is Encoded-GOPR2548-20190421.mp4
