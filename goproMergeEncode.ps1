@@ -37,7 +37,7 @@ param (
 if ($test)
 {
 	"Testing merging and encoding the first second. No original files will be removed"
-	$HandbrakeExtraParam = $HandbrakeExtraParam + ' --start-at duration:0 --stop-at duration:3'
+	$HandbrakeExtraParam = $HandbrakeExtraParam + ' --start-at duration:0 --stop-at duration:1'
 }
 
 'Processing directory ' + $dir
@@ -76,22 +76,23 @@ if ($rootFiles.length -gt 0)
 
 		$outputMerged = $dir.ToString() + 'Merged-'  + $initFile.BaseName + '-' + $date + '.mkv'
 
-		$outputEncoded = $dir.ToString() + 'Encoded-'  + $initFile.BaseName + '-' + $date + '.mp4'
+		$outputFileEncoded = 'Encoded-'  + $initFile.BaseName + '-' + $date + '.mp4'
+    $outputFullPath = $dir.ToString() + $outputFileEncoded
 
 		$start = '"C:/Program Files/MKVToolNix\mkvmerge.exe" --ui-language en --output ^"' + $outputMerged + '^" --language 0:und --language 1:und ^"^(^" ^"'
 		$cmdMerge = $start + ($filesFullname -join '^" ^"^)^" + ^"^(^" ^"') + '^" ^"^)^" --track-order 0:0,0:1 ' + $MKVMergeExtraParam
 
 		cmd /c $cmdMerge
 
-		$cmdEncode = '"C:\Program Files\HandBrake\HandBrakeCLI.exe" --preset "' + $preset + '" -i"' + $outputMerged + '" -o "' + $outputEncoded + '" --turbo ' + $HandbrakeExtraParam
+		$cmdEncode = '"C:\Program Files\HandBrake\HandBrakeCLI.exe" --preset "' + $preset + '" -i"' + $outputMerged + '" -o "' + $outputFullPath + '" --turbo ' + $HandbrakeExtraParam
 		if (-Not $noEncoding)
 		{
 			cmd /c $cmdEncode
-
-			$encodedFile = (Get-ChildItem -Filter $outputMerged -Path $dir)
-			$encodedFile.CreationTime = [datetime]::parseexact($date, 'yyyyMMdd', $null)
+			$encodedFile = (Get-ChildItem -Filter $outputFileEncoded.ToString() -Path $dir.ToString())
+			$encodedFile.CreationTime = [datetime]::parseexact($date.ToString(), 'yyyyMMdd', $null)
 			$encodedFile.LastWriteTime = $encodedFile.CreationTime
 		}
+
 
 		if ($LASTEXITCODE -ne 0) 
 		{
