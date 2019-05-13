@@ -6,6 +6,8 @@
 #Parameters
 #-dir Defaults to the current directory
 #-preset The default preset is "Vimeo YouTube HQ 1440p60 2.5K"
+#-MKVMergeLocation Location of mkvmerge.exe, defaults to 'C:\Program Files\MKVToolNix',
+#-HandbrakeLocation Location of HandBrakeCLI.exe, defaults to'C:\Program Files\HandBrake',
 #-MKVMergeExtraParam Extra parameters for MKVMerge
 #-HandbrakeExtraParam Extra parameters for Handbrake
 #-test Test merge and encode three seconds of each video, without deleting the original files
@@ -20,107 +22,122 @@
 
 #Example .\goproMergeEncode.ps1 -dir "D:\Video\GoPro\2019-04-21\HERO5 Black 1\"
 #Output file for D:\Video\GoPro\2019-04-21\HERO5 Black 1\GOPR2548.MP4 is Encoded-GOPR2548-20190421.mp4
-#If you have issues running powershell scripts, use powershell –ExecutionPolicy Bypass or see https://www.windowscentral.com/how-create-and-run-your-first-powershell-script-file-windows-10
+#If you have issues running powershell scripts, use powershell -ExecutionPolicy Bypass or see https://www.windowscentral.com/how-create-and-run-your-first-powershell-script-file-windows-10
 # Author: Alexandros Konstantonis alexkonstantonis(at)gmail.com
 
 param (
-	[string]$dir = $(Get-Location),
-	[string]$preset = 'Vimeo YouTube HQ 1440p60 2.5K',
-	[string]$MKVMergeExtraParam = '',
-	[string]$HandbrakeExtraParam = '',
-	[switch]$delete = $true,
-	[switch]$test = $false,
-	[switch]$noEncoding = $false,
-	[switch]$mergeAll = $false
+  [string]$dir = $(Get-Location),
+  [string]$preset = 'Vimeo YouTube HQ 1440p60 2.5K',
+  [string]$MKVMergeLocation = 'C:\Program Files\MKVToolNix\',
+  [string]$HandbrakeLocation = 'C:\Program Files\HandBrake\',
+  [string]$MKVMergeExtraParam = '',
+  [string]$HandbrakeExtraParam = '',
+  [switch]$delete = $true,
+  [switch]$test = $false,
+  [switch]$noEncoding = $false,
+  [switch]$mergeAll = $false
 )
 
 if ($test)
 {
-	"Testing merging and encoding the first second. No original files will be removed"
-	$HandbrakeExtraParam = $HandbrakeExtraParam + ' --start-at duration:0 --stop-at duration:1'
+  "Testing merging and encoding the first second. No original files will be removed"
+  $HandbrakeExtraParam = $HandbrakeExtraParam + ' --start-at duration:0 --stop-at duration:1'
+}
+
+if (-Not $PSBoundParameters.ContainsKey('dir'))
+{
+  $dir = $dir + '\'
 }
 
 'Processing directory ' + $dir
 
 if ($mergeAll)
 {
-	$rootFiles = (Get-ChildItem -Filter *.mp4 -Path $dir)
+  $rootFiles = (Get-ChildItem -Filter *.mp4 -Path $dir)
 }
 else
 {
-	$rootFiles = (Get-ChildItem -Filter GOPR*.mp4 -Path $dir)
-	$date = $dir.Split("\")
-	$date = $date[$date.length - 3].Replace("-", "")
+  $rootFiles = (Get-ChildItem -Filter GOPR*.mp4 -Path $dir)
+  $date = $dir.Split("\")
+  $date = $date[$date.length - 3].Replace("-", "")
 }
 
 
 if ($rootFiles.length -gt 0)
 {
-	ForEach ($initFile In $rootFiles)
-	{
-		if ($mergeAll)
-		{
-			$filesCount = $rootFiles.Count
-			$filesFullname = $rootFiles.fullname
-			$date = $initFile.LastWriteTime.ToString("yyyyMMdd")
-		}
-		else
-		{
-			$root = $initFile.name.Substring(4).Split(".")[0]
-			$files = (Get-ChildItem -Filter G*$root*.mp4 -Path $dir)
-			$filesCount = $files.Count
-			$filesFullname = $files.fullname
-		}
+  ForEach ($initFile In $rootFiles)
+  {
+    if ($mergeAll)
+    {
+      $filesCount = $rootFiles.Count
+      $filesFullname = $rootFiles.fullname
+      $date = $initFile.LastWriteTime.ToString("yyyyMMdd")
+    }
+    else
+    {
+      $root = $initFile.name.Substring(4).Split(".")[0]
+      $files = (Get-ChildItem -Filter G*$root*.mp4 -Path $dir)
+      $filesCount = $files.Count
+      $filesFullname = $files.fullname
+    }
 
-		'Processing ' + $filesCount + " files:`n" + $filesFullname + "`n`n"	
+    'Processing ' + $filesCount + " files:`n" + $filesFullname + "`n`n"  
 
-		$outputMerged = $dir.ToString() + 'Merged-'  + $initFile.BaseName + '-' + $date + '.mkv'
+    $outputMerged = $dir.ToString() + 'Merged-' + $initFile.BaseName + '-' + $date + '.mkv'
 
-		$outputFileEncoded = 'Encoded-'  + $initFile.BaseName + '-' + $date + '.mp4'
+    $outputFileEncoded = 'Encoded-' + $initFile.BaseName + '-' + $date + '.mp4'
     $outputFullPath = $dir.ToString() + $outputFileEncoded
 
-		$start = '"C:/Program Files/MKVToolNix\mkvmerge.exe" --ui-language en --output ^"' + $outputMerged + '^" --language 0:und --language 1:und ^"^(^" ^"'
-		$cmdMerge = $start + ($filesFullname -join '^" ^"^)^" + ^"^(^" ^"') + '^" ^"^)^" --track-order 0:0,0:1 ' + $MKVMergeExtraParam
+    $start = '"' + $MKVMergeLocation + 'mkvmerge.exe" --ui-language en --output ^"' + $outputMerged + '^" --language 0:und --language 1:und ^"^(^" ^"'
+    $cmdMerge = $start + ($filesFullname -join '^" ^"^)^" + ^"^(^" ^"') + '^" ^"^)^" --track-order 0:0,0:1 ' + $MKVMergeExtraParam
 
-		cmd /c $cmdMerge
+    cmd /c $cmdMerge
 
-		$cmdEncode = '"C:\Program Files\HandBrake\HandBrakeCLI.exe" --preset "' + $preset + '" -i"' + $outputMerged + '" -o "' + $outputFullPath + '" --turbo ' + $HandbrakeExtraParam
-		if (-Not $noEncoding)
-		{
-			cmd /c $cmdEncode
-			$encodedFile = (Get-ChildItem -Filter $outputFileEncoded.ToString() -Path $dir.ToString())
-			$encodedFile.CreationTime = [datetime]::parseexact($date.ToString(), 'yyyyMMdd', $null)
-			$encodedFile.LastWriteTime = $encodedFile.CreationTime
-		}
+    $cmdEncode = '"' + $HandbrakeLocation + 'HandBrakeCLI.exe" --preset "' + $preset + '" -i"' + $outputMerged + '" -o "' + $outputFullPath + '" --turbo ' + $HandbrakeExtraParam
+    if (-Not $noEncoding)
+    {
+      cmd /c $cmdEncode
+      $encodedFile = (Get-ChildItem -Filter $outputFileEncoded.ToString() -Path $dir.ToString())
+      $encodedFile.CreationTime = [datetime]::parseexact($date.ToString(), 'yyyyMMdd', $null)
+      $encodedFile.LastWriteTime = $encodedFile.CreationTime
+    }
 
 
-		if ($LASTEXITCODE -ne 0) 
-		{
-			$error.Clear()
-			"An error occurred, aborting deletion of files:`n" + $filesFullname
-		}
-		else
-		{
-			if (-Not $noEncoding)
-			{
-				Remove-Item $outputMerged
-			}
-			
-			if (-Not $test -And $delete)
-			{
-				"Removing files " + $filesFullname
-				Remove-Item $filesFullname
-			}
-			"Finished successfully merging and encoding at " + $(get-date) + " processing files:`n " + $filesFullname
-		}
-		if ($mergeAll)
-		{
-			#Don't loop, all is merged
-			exit
-		}
-	}	
+    if ($LASTEXITCODE -ne 0)
+    {
+      $error.Clear()
+      "An error occurred, aborting deletion of files:`n" + $filesFullname
+    }
+    else
+    {
+      if (-Not $noEncoding)
+      {
+        Remove-Item $outputMerged
+      }
+      
+      if (-Not $test -And $delete)
+      {
+        "Removing files " + $filesFullname
+        Remove-Item $filesFullname
+      }
+      "Finished successfully merging and encoding at " + $(get-date) + " processing files:`n " + $filesFullname
+    }
+    if ($mergeAll)
+    {
+      #Don't loop for other videos, all is merged
+      exit
+    }
+  }
 }
 else
 {
-	"No mp4 files to process in directory " + $dir
+  if ($mergeAll)
+  {
+    "No mp4 files to process in directory " + $dir
+  }
+  else
+  {
+    "No mp4 files starting with GOPR found to process in directory " + $dir
+    "Try using -mergeAll parameter"
+  }
 }

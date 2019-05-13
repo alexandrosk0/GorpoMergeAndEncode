@@ -4,7 +4,8 @@ Merge and encode single videos split into multiple mp4 files with PowerShell usi
 ## Description
 Merge and encode single videos split into multiple mp4 files in the given GoPro export folder and removes original files if successful. various unique recording in the same directory.
 
-Requires [MKVmerge](https://mkvtoolnix.download/) and [HandBrakeCLI](https://handbrake.fr/downloads2.php) installed in C:/Program Files/MKVToolNix\ and C:\Program Files\HandBrake\ respectively.
+Requires [MKVmerge](https://mkvtoolnix.download/) and [HandBrakeCLI](https://handbrake.fr/downloads2.php) installed in C:\Program Files\MKVToolNix\ and C:\Program Files\HandBrake\ respectively.
+Custom paths can be setup using the parameters `-MKVMergeLocation` and `-HandbrakeLocation`.
 
 
 See [official Handbrake presets](https://handbrake.fr/docs/en/latest/technical/official-presets.html)
@@ -15,6 +16,9 @@ Output file is Encoded-{original filename}-{date of subfolder}
 
 * `-dir` Defaults to the current directory
 * `-preset` The default preset is "Vimeo YouTube HQ 1440p60 2.5K".
+* `-MKVMergeLocation` Location of mkvmerge.exe, defaults to 'C:\Program Files\MKVToolNix\',
+* `-HandbrakeLocation` Location of HandBrakeCLI.exe, defaults to'C:\Program Files\HandBrake\',
+
 * `-MKVMergeExtraParam` Extra parameters for MKVMerge
 * `-HandbrakeExtraParam` Extra parameters for Handbrake
 * `-test` Test merge and encode three seconds of each video, without deleting the original files
@@ -74,4 +78,4 @@ Decided to make it open source, since others might find useful, but now I have s
 
 ## Contact
 All code reviews, suggestions, recommendations, pieces of advice, optimizations, insults are welcomed.
-alexkonstantonis@gmail.com
+contact@alexandrosk0.dev
