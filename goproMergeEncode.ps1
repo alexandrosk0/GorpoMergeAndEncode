@@ -44,7 +44,8 @@ if ($test)
   $HandbrakeExtraParam = $HandbrakeExtraParam + ' --start-at duration:0 --stop-at duration:1'
 }
 
-if (-Not $PSBoundParameters.ContainsKey('dir'))
+
+if (-Not $dir.EndsWith('\') -Or -Not $PSBoundParameters.ContainsKey('dir'))
 {
   $dir = $dir + '\'
 }
